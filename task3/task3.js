@@ -1,23 +1,25 @@
-// Create an iterable object by implementing @@iterator method
-// i.e. Symbol.iterator, so that you can use for..of and retrieve its
-// properties. retrieving the object properties and its values.
+//object iterator
 
 let object = {
   name: "nesma",
   age: 23,
   track: "mearn",
+  [Symbol.iterator]: function () {
+    const keys = Object.keys(this);
+    let index = 0;
+    return {
+      next: () => {
+        if (keys.length > index) {
+          const key = keys[index++];
+          return { value: [key, this[key]], done: false };
+        } else {
+          return { done: true };
+        }
+      },
+    };
+  },
 };
 
-function* handleDisplay() {
-  for (let key in this) {
-    yield this[key];
-  }
-  return;
-}
-
-object[Symbol.iterator] = handleDisplay;
-let iterator = object[Symbol.iterator];
-
-for (let value of object) {
-  console.log(value);
+for (let [key, value] of object) {
+  console.log(`${key} is : ${value}`);
 }
