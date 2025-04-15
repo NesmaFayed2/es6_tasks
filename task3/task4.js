@@ -9,6 +9,6 @@ arr[Symbol.iterator] = function* displayHandel() {
   }
 };
 
-for (let value of arr) {
-  console.log(value);
+for (let val of arr) {
+  console.log(val);
 }
